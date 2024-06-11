@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { Button } from '../Button';
 
@@ -5,8 +6,8 @@ const Header = () => {
   return (
     <StyledHeader>
       <StyledNav>
-        <StyledHeading>🍀 My Todo List</StyledHeading>
-        <Button variant="secondary" href="/">
+        <StyledHeading to="/">🍀 My Todo List</StyledHeading>
+        <Button variant="secondary" href="/signin">
           @1eeyerin
         </Button>
         <StyledImg
@@ -27,7 +28,7 @@ const StyledHeader = styled.header`
   z-index: 10;
 `;
 
-const StyledHeading = styled.h1`
+const StyledHeading = styled(Link)`
   font-size: 18px;
   font-weight: 600;
   flex-grow: 1;

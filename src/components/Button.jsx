@@ -1,4 +1,5 @@
 import { forwardRef } from 'react';
+import { Link } from 'react-router-dom';
 import styled, { css } from 'styled-components';
 import { colors } from '@/styles/constants';
 import { hexToRGB } from '@/styles/utils';
@@ -17,6 +18,8 @@ const Button = forwardRef(
     ref,
   ) => {
     const Comp = href ? StyledLink : StyledButton;
+    const buttonProps = href ? { to: href, ...props } : { type, ...props };
+
     return (
       <Comp
         className={className}
@@ -25,7 +28,8 @@ const Button = forwardRef(
         $fullWidth={fullWidth}
         type={type}
         ref={ref}
-        {...props}
+        href={href}
+        {...buttonProps}
       />
     );
   },
@@ -81,7 +85,7 @@ const StyledButton = styled.button`
   ${(props) => props.$fullWidth && 'width: 100%;'}
 `;
 
-const StyledLink = styled.a`
+const StyledLink = styled(Link)`
   ${baseStyles}
   ${(props) => variantStyles[props.$variant] || variantStyles.default}
   ${(props) => sizeStyles[props.$size] || sizeStyles.default}
