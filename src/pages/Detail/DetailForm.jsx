@@ -35,11 +35,7 @@ const DetailForm = () => {
     navigate(-1);
   };
 
-  const {
-    handleSubmit,
-    formRef,
-    message: errorMessage,
-  } = useForm({
+  const { handleSubmit, message: errorMessage } = useForm({
     resolver,
     onSubmit: (values) => {
       navigate(-1);
@@ -50,7 +46,7 @@ const DetailForm = () => {
   if (!post) return null;
 
   return (
-    <StyledForm ref={formRef} onSubmit={handleSubmit}>
+    <StyledForm onSubmit={handleSubmit}>
       <FormField
         name="date"
         message={errorMessage}

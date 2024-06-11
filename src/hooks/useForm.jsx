@@ -1,13 +1,12 @@
-import { useRef, useState } from 'react';
+import { useState } from 'react';
 
 const useForm = ({ resolver, onSubmit }) => {
-  const formRef = useRef(null);
   const [message, setMessage] = useState({});
 
   const handleSubmit = (event) => {
     event.preventDefault();
 
-    const formData = new FormData(formRef.current);
+    const formData = new FormData(event.target);
     const formValues = Object.fromEntries(formData.entries());
     let errors = {};
 
@@ -21,13 +20,12 @@ const useForm = ({ resolver, onSubmit }) => {
     }
 
     onSubmit(formValues);
-    formRef.current.reset();
+    event.target.reset();
     setMessage({});
   };
 
   return {
     handleSubmit,
-    formRef,
     message,
   };
 };

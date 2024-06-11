@@ -7,6 +7,7 @@ ${constants};
 
 html, body {
     font-size: 100%;
+    font-family: ui-sans-serif,system-ui,sans-serif,"Apple Color Emoji","Segoe UI Emoji",Segoe UI Symbol,"Noto Color Emoji";
     line-height: 1;
 }
 
