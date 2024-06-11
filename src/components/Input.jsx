@@ -1,7 +1,7 @@
 import { forwardRef } from 'react';
 import styled from 'styled-components';
 
-const Input = forwardRef(({ className, type, ...props }, ref) => {
+const Input = forwardRef(({ className, type = 'text', ...props }, ref) => {
   return <StyledInput type={type} className={className} ref={ref} {...props} />;
 });
 

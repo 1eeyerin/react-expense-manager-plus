@@ -7,7 +7,7 @@ const FormField = ({ render, name, message, ...props }) => {
     id: name,
     name,
     htmlFor: name,
-    message: message[name]?.[0],
+    ...(message && { message: message[name]?.[0] }),
   });
 };
 
