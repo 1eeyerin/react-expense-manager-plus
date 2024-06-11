@@ -40,6 +40,7 @@ const baseStyles = css`
   font-size: 14px;
   font-weight: 500;
   transition: 0.15s ease-in-out;
+  cursor: pointer;
 `;
 
 const variantStyles = {

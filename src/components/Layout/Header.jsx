@@ -1,12 +1,14 @@
-import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import { Button } from '../Button';
 
 const Header = () => {
   return (
     <StyledHeader>
       <StyledNav>
         <StyledHeading>🍀 My Todo List</StyledHeading>
-        <StyledLink to="/">@1eeyerin</StyledLink>
+        <Button variant="secondary" href="/">
+          @1eeyerin
+        </Button>
         <StyledImg
           src="https://avatars.githubusercontent.com/u/40863185?v=4"
           alt=""
@@ -17,27 +19,12 @@ const Header = () => {
 };
 
 const StyledHeader = styled.header`
-  background-color: #f9fbfc;
+  background-color: #ffffff;
   border-bottom: 1px solid #e2e8f0;
   padding: 0 24px;
   position: sticky;
   top: 0;
   z-index: 10;
-`;
-
-const StyledLink = styled(Link)`
-  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-  transition-duration: 0.15s;
-  border: 1px solid #e2e8f0;
-  border-radius: 6px;
-  font-size: 14px;
-  padding: 8px 16px;
-  font-weight: 500;
-  line-height: 20px;
-
-  &:hover {
-    background-color: #f1f5f9;
-  }
 `;
 
 const StyledHeading = styled.h1`
