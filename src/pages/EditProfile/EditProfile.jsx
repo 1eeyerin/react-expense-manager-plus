@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import { styled } from 'styled-components';
 import { Button } from '@/components/Button';
 import { FormField, FormItem, FormMessage } from '@/components/Form';
 import { Input } from '@/components/Input';
@@ -13,6 +13,7 @@ const EditProfile = () => {
       <StyledTypography as="h2" variant="typography3" weight="bold">
         프로필 수정
       </StyledTypography>
+
       <StyledSection>
         <StyledForm onSubmit={handleSubmit}>
           <FormField
@@ -57,11 +58,8 @@ const EditProfile = () => {
           />
 
           <StyledButtonGroup>
-            <Button variant="secondary" fullWidth>
-              로그인
-            </Button>
             <Button type="submit" fullWidth>
-              회원가입
+              수정하기
             </Button>
           </StyledButtonGroup>
         </StyledForm>
