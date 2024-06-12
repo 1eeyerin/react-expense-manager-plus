@@ -1,12 +1,19 @@
 import styled from 'styled-components';
+import useForm from '@/hooks/useForm';
 import { Button } from '@/components/Button';
 import { FormField, FormItem, FormMessage } from '@/components/Form';
 import { Input } from '@/components/Input';
 import { Label } from '@/components/Label';
 import Typography from '@/components/Typography';
+import { loginUser } from '@/api/auth';
 
 const Signin = () => {
-  const handleSubmit = () => {};
+  const { handleSubmit, message: errorMessage } = useForm({
+    onSubmit: async (values) => {
+      console.log('@@');
+      await loginUser(values);
+    },
+  });
 
   return (
     <>
@@ -44,7 +51,9 @@ const Signin = () => {
           />
 
           <StyledButtonGroup>
-            <Button fullWidth>로그인</Button>
+            <Button type="submit" fullWidth>
+              로그인
+            </Button>
             <Button variant="secondary" type="submit" href="/signup" fullWidth>
               회원가입
             </Button>

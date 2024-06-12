@@ -1,12 +1,18 @@
 import styled from 'styled-components';
+import useForm from '@/hooks/useForm';
 import { Button } from '@/components/Button';
 import { FormField, FormItem, FormMessage } from '@/components/Form';
 import { Input } from '@/components/Input';
 import { Label } from '@/components/Label';
 import Typography from '@/components/Typography';
+import { registerUser } from '@/api/auth';
 
 const Signup = () => {
-  const handleSubmit = () => {};
+  const { handleSubmit, message: errorMessage } = useForm({
+    onSubmit: async (values) => {
+      await registerUser(values);
+    },
+  });
 
   return (
     <>
@@ -28,6 +34,7 @@ const Signup = () => {
                   placeholder="아이디를 입력하세요"
                   minLength={4}
                   maxLength={10}
+                  required
                 />
                 <FormMessage message={message} />
               </FormItem>
@@ -45,13 +52,14 @@ const Signup = () => {
                   placeholder="비밀번호를 입력하세요"
                   minLength={4}
                   maxLength={15}
+                  required
                 />
                 <FormMessage message={message} />
               </FormItem>
             )}
           />
           <FormField
-            name="displayName"
+            name="nickname"
             render={({ id, htmlFor, name, message }) => (
               <FormItem>
                 <Label htmlFor={htmlFor}>닉네임</Label>
@@ -60,6 +68,7 @@ const Signup = () => {
                   name={name}
                   placeholder="닉네임을 입력하세요"
                   maxLength={10}
+                  required
                 />
                 <FormMessage message={message} />
               </FormItem>
@@ -67,11 +76,11 @@ const Signup = () => {
           />
 
           <StyledButtonGroup>
-            <Button variant="secondary" href="/signin" fullWidth>
-              로그인
-            </Button>
             <Button type="submit" fullWidth>
               회원가입
+            </Button>
+            <Button variant="secondary" href="/signin" fullWidth>
+              로그인
             </Button>
           </StyledButtonGroup>
         </StyledForm>

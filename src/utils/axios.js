@@ -10,10 +10,10 @@ export const createAxiosRequestOptions = ({
   const options = {
     headers: {
       'Content-Type': 'application/json',
-      ...(isFilled(headers) && { headers }),
+      ...(isFilled(headers) && headers),
     },
     ...(isFilled(params) && { params }),
-    ...(isFormData && { body }),
+    ...(isFilled(body) && { body }),
   };
 
   if (isFormData) {
