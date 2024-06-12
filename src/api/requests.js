@@ -3,7 +3,6 @@ import apiClient from '.';
 
 export const axiosGet = async ({ url, ...customOptions }) => {
   const options = createAxiosRequestOptions(customOptions);
-
   const response = await apiClient.get(url, options);
   return response.data;
 };

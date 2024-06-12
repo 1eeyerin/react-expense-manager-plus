@@ -7,13 +7,15 @@ export const createAxiosRequestOptions = ({
 } = {}) => {
   const isFormData = body instanceof FormData;
 
+  const hasBodyData = isFilled(body) || isFormData;
+
   const options = {
     headers: {
       'Content-Type': 'application/json',
       ...(isFilled(headers) && headers),
     },
     ...(isFilled(params) && { params }),
-    ...(isFilled(body) && { body }),
+    ...(hasBodyData && { body }),
   };
 
   if (isFormData) {

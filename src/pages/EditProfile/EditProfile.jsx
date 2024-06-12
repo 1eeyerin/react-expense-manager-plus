@@ -6,19 +6,26 @@ import { FormField, FormItem, FormMessage } from '@/components/Form';
 import { Input } from '@/components/Input';
 import { Label } from '@/components/Label';
 import Typography from '@/components/Typography';
+import { updateProfile } from '@/api/auth';
+import useAuthStore from '@/zustand/useAuthStore';
 
 const EditProfile = () => {
+  const setUser = useAuthStore((state) => state.setUser);
+
   const { mutate } = useMutation({
-    mutationFn: (values) => loginUser(values),
+    mutationFn: (values) => updateProfile(values),
     onSuccess: (data) => {
       setUser(data);
-      navigate('/');
+      alert('프로필 수정이 완료되었어요');
     },
   });
 
   const { handleSubmit, message: errorMessage } = useForm({
     onSubmit: async (values) => {
-      mutate(values);
+      const formData = new FormData();
+      formData.append('avatar', values.avatar);
+      formData.append('nickname', values.nickname);
+      mutate(formData);
     },
   });
 
@@ -33,32 +40,7 @@ const EditProfile = () => {
       <StyledSection>
         <StyledForm onSubmit={handleSubmit}>
           <FormField
-            name="id"
-            render={({ id, htmlFor, name, message }) => (
-              <FormItem>
-                <Label htmlFor={htmlFor}>아이디</Label>
-                <Input id={id} name={name} placeholder="아이디를 입력하세요" />
-                <FormMessage message={message} />
-              </FormItem>
-            )}
-          />
-          <FormField
-            name="password"
-            render={({ id, htmlFor, name, message }) => (
-              <FormItem>
-                <Label htmlFor={htmlFor}>비밀번호</Label>
-                <Input
-                  id={id}
-                  name={name}
-                  type="password"
-                  placeholder="비밀번호를 입력하세요"
-                />
-                <FormMessage message={message} />
-              </FormItem>
-            )}
-          />
-          <FormField
-            name="displayName"
+            name="nickname"
             render={({ id, htmlFor, name, message }) => (
               <FormItem>
                 <Label htmlFor={htmlFor}>닉네임</Label>
@@ -66,7 +48,23 @@ const EditProfile = () => {
                   id={id}
                   name={name}
                   placeholder="닉네임을 입력하세요"
-                  maxLength={15}
+                  maxLength={10}
+                />
+                <FormMessage message={message} />
+              </FormItem>
+            )}
+          />
+          <FormField
+            name="avatar"
+            render={({ id, htmlFor, name, message }) => (
+              <FormItem>
+                <Label htmlFor={htmlFor}>프로필 이미지</Label>
+                <Input
+                  type="file"
+                  id={id}
+                  name={name}
+                  accept="image/*"
+                  placeholder="썸네일을 입력하세요"
                 />
                 <FormMessage message={message} />
               </FormItem>

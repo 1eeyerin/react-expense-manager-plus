@@ -11,7 +11,7 @@ const useAuthStore = create(
     ...initState,
     setUser: (user) =>
       set((state) => {
-        state.user = user;
+        state.user = { ...state.user, ...user };
         state.isLogin = true;
       }),
     logout: () =>

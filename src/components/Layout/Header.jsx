@@ -3,6 +3,8 @@ import styled from 'styled-components';
 import useAuthStore from '@/zustand/useAuthStore';
 import LogoutButton from './LogoutButton';
 
+const DEFAULT_AVATAR = 'https://avatars.githubusercontent.com/u/40863185?v=4';
+
 const Header = () => {
   const user = useAuthStore((state) => state.user);
 
@@ -12,10 +14,7 @@ const Header = () => {
         <StyledHeading to="/">🍀 My Todo List</StyledHeading>
         <StyledLink to="/edit-profile">
           <StyledName>{`@${user.nickname}`}</StyledName>
-          <StyledImg
-            src="https://avatars.githubusercontent.com/u/40863185?v=4"
-            alt=""
-          />
+          <StyledImg src={user.avatar || DEFAULT_AVATAR} alt="" />
         </StyledLink>
         <LogoutButton />
       </StyledNav>
