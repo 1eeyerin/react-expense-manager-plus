@@ -2,6 +2,7 @@ import { useNavigate } from 'react-router-dom';
 import { useMutation } from '@tanstack/react-query';
 import styled from 'styled-components';
 import useForm from '@/hooks/useForm';
+import { setTokenToLocalStorage } from '@/utils';
 import { Button } from '@/components/Button';
 import { FormField, FormItem, FormMessage } from '@/components/Form';
 import { Input } from '@/components/Input';
@@ -18,6 +19,7 @@ const Signin = () => {
     mutationFn: (values) => loginUser(values),
     onSuccess: (data) => {
       setUser(data);
+      setTokenToLocalStorage(data.accessToken);
       navigate('/');
     },
   });

@@ -1,11 +1,14 @@
 import { Outlet } from 'react-router-dom';
 import styled from 'styled-components';
+import useAuthStore from '@/zustand/useAuthStore';
 import Header from './Header';
 
 const Container = () => {
+  const isLogin = useAuthStore((state) => state.isLogin);
+
   return (
     <>
-      <Header />
+      {isLogin && <Header />}
       <StyledContainer>
         <Outlet />
       </StyledContainer>

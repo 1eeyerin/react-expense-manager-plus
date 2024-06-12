@@ -1,14 +1,17 @@
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import useAuthStore from '@/zustand/useAuthStore';
 import { Button } from '../Button';
 
 const Header = () => {
+  const user = useAuthStore((state) => state.user);
+
   return (
     <StyledHeader>
       <StyledNav>
         <StyledHeading to="/">🍀 My Todo List</StyledHeading>
-        <Button variant="secondary" href="/signin">
-          @1eeyerin
+        <Button variant="secondary" href="/edit-profile">
+          {`@${user.nickname}`}
         </Button>
         <StyledImg
           src="https://avatars.githubusercontent.com/u/40863185?v=4"

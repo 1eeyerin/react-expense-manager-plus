@@ -1,4 +1,6 @@
+import { useMutation } from '@tanstack/react-query';
 import { styled } from 'styled-components';
+import useForm from '@/hooks/useForm';
 import { Button } from '@/components/Button';
 import { FormField, FormItem, FormMessage } from '@/components/Form';
 import { Input } from '@/components/Input';
@@ -6,12 +8,26 @@ import { Label } from '@/components/Label';
 import Typography from '@/components/Typography';
 
 const EditProfile = () => {
-  const handleSubmit = () => {};
+  const { mutate } = useMutation({
+    mutationFn: (values) => loginUser(values),
+    onSuccess: (data) => {
+      setUser(data);
+      navigate('/');
+    },
+  });
+
+  const { handleSubmit, message: errorMessage } = useForm({
+    onSubmit: async (values) => {
+      mutate(values);
+    },
+  });
 
   return (
     <>
-      <StyledTypography as="h2" variant="typography3" weight="bold">
-        프로필 수정
+      <StyledTypography>
+        <Typography as="h2" variant="typography3" weight="bold">
+          프로필 수정
+        </Typography>
       </StyledTypography>
 
       <StyledSection>
@@ -74,8 +90,7 @@ const StyledButtonGroup = styled.div`
   gap: 16px;
 `;
 
-// TODO 스타일이 깨지는 문제, 상속이 제대로 안되는 문제
-const StyledTypography = styled(Typography)`
+const StyledTypography = styled.div`
   margin-bottom: 24px;
   text-align: center;
 `;

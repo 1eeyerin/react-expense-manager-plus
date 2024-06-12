@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { getTokenFromLocalStorage } from '@/utils';
 
 const apiClient = axios.create({
   timeout: 10000,
@@ -8,7 +9,7 @@ const apiClient = axios.create({
 
 apiClient.interceptors.request.use(
   (config) => {
-    const token = localStorage.getItem('token');
+    const token = getTokenFromLocalStorage();
     const newConfig = { ...config };
 
     if (token) {
