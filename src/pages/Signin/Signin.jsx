@@ -10,8 +10,10 @@ const Signin = () => {
 
   return (
     <>
-      <StyledTypography as="h2" variant="typography3" weight="bold">
-        로그인
+      <StyledTypography>
+        <Typography as="h2" variant="typography4" weight="bold">
+          로그인
+        </Typography>
       </StyledTypography>
       <StyledSection>
         <StyledForm onSubmit={handleSubmit}>
@@ -42,10 +44,8 @@ const Signin = () => {
           />
 
           <StyledButtonGroup>
-            <Button variant="secondary" fullWidth>
-              로그인
-            </Button>
-            <Button type="submit" href="/signup" fullWidth>
+            <Button fullWidth>로그인</Button>
+            <Button variant="secondary" type="submit" href="/signup" fullWidth>
               회원가입
             </Button>
           </StyledButtonGroup>
@@ -61,8 +61,7 @@ const StyledButtonGroup = styled.div`
   gap: 16px;
 `;
 
-// TODO 스타일이 깨지는 문제, 상속이 제대로 안되는 문제
-const StyledTypography = styled(Typography)`
+const StyledTypography = styled.div`
   margin-bottom: 24px;
   text-align: center;
 `;
