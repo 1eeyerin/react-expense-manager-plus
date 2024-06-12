@@ -14,6 +14,11 @@ const useAuthStore = create(
         state.user = user;
         state.isLogin = true;
       }),
+    logout: () =>
+      set((state) => {
+        state.user = null;
+        state.isLogin = false;
+      }),
   })),
   {
     name: 'auth-storage',

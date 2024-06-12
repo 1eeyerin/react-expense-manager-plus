@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import useAuthStore from '@/zustand/useAuthStore';
-import { Button } from '../Button';
+import LogoutButton from './LogoutButton';
 
 const Header = () => {
   const user = useAuthStore((state) => state.user);
@@ -10,13 +10,14 @@ const Header = () => {
     <StyledHeader>
       <StyledNav>
         <StyledHeading to="/">🍀 My Todo List</StyledHeading>
-        <Button variant="secondary" href="/edit-profile">
-          {`@${user.nickname}`}
-        </Button>
-        <StyledImg
-          src="https://avatars.githubusercontent.com/u/40863185?v=4"
-          alt=""
-        />
+        <StyledLink to="/edit-profile">
+          <StyledName>{`@${user.nickname}`}</StyledName>
+          <StyledImg
+            src="https://avatars.githubusercontent.com/u/40863185?v=4"
+            alt=""
+          />
+        </StyledLink>
+        <LogoutButton />
       </StyledNav>
     </StyledHeader>
   );
@@ -37,11 +38,17 @@ const StyledHeading = styled(Link)`
   flex-grow: 1;
 `;
 
+const StyledLink = styled(Link)`
+  display: flex;
+  align-items: center;
+  gap: 16px;
+`;
+
 const StyledNav = styled.nav`
   height: 64px;
   display: flex;
   align-items: center;
-  gap: 20px;
+  gap: 16px;
 `;
 
 const StyledImg = styled.img`
@@ -49,6 +56,11 @@ const StyledImg = styled.img`
   height: 40px;
   border-radius: 50%;
   object-fit: cover;
+`;
+
+const StyledName = styled.span`
+  font-size: 14px;
+  font-weight: 600;
 `;
 
 export default Header;
