@@ -1,6 +1,7 @@
 import { createBrowserRouter } from 'react-router-dom';
 import { Home, Detail, Signin, Signup, EditProfile } from '@/pages';
 import { Container } from '@/components/Layout';
+import ProtectedRoute from './ProtectedRoute';
 
 const router = createBrowserRouter([
   {
@@ -17,15 +18,15 @@ const router = createBrowserRouter([
       },
       {
         path: 'signin',
-        element: <Signin />,
+        element: <ProtectedRoute element={<Signin />} isPublic />,
       },
       {
         path: 'signup',
-        element: <Signup />,
+        element: <ProtectedRoute element={<Signup />} isPublic />,
       },
       {
         path: 'edit-profile',
-        element: <EditProfile />,
+        element: <ProtectedRoute element={<EditProfile />} />,
       },
     ],
   },

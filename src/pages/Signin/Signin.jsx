@@ -1,3 +1,5 @@
+import { useNavigate } from 'react-router-dom';
+import { useMutation } from '@tanstack/react-query';
 import styled from 'styled-components';
 import useForm from '@/hooks/useForm';
 import { Button } from '@/components/Button';
@@ -6,12 +8,23 @@ import { Input } from '@/components/Input';
 import { Label } from '@/components/Label';
 import Typography from '@/components/Typography';
 import { loginUser } from '@/api/auth';
+import useAuthStore from '@/zustand/useAuthStore';
 
 const Signin = () => {
+  const navigate = useNavigate();
+  const setUser = useAuthStore((state) => state.setUser);
+
+  const { mutate } = useMutation({
+    mutationFn: (values) => loginUser(values),
+    onSuccess: (data) => {
+      setUser(data);
+      navigate('/');
+    },
+  });
+
   const { handleSubmit, message: errorMessage } = useForm({
     onSubmit: async (values) => {
-      console.log('@@');
-      await loginUser(values);
+      mutate(values);
     },
   });
 
