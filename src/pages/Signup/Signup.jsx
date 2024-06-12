@@ -22,7 +22,13 @@ const Signup = () => {
             render={({ id, htmlFor, name, message }) => (
               <FormItem>
                 <Label htmlFor={htmlFor}>아이디</Label>
-                <Input id={id} name={name} placeholder="아이디를 입력하세요" />
+                <Input
+                  id={id}
+                  name={name}
+                  placeholder="아이디를 입력하세요"
+                  minLength={4}
+                  maxLength={10}
+                />
                 <FormMessage message={message} />
               </FormItem>
             )}
@@ -37,6 +43,8 @@ const Signup = () => {
                   name={name}
                   type="password"
                   placeholder="비밀번호를 입력하세요"
+                  minLength={4}
+                  maxLength={15}
                 />
                 <FormMessage message={message} />
               </FormItem>
@@ -51,7 +59,7 @@ const Signup = () => {
                   id={id}
                   name={name}
                   placeholder="닉네임을 입력하세요"
-                  maxLength={15}
+                  maxLength={10}
                 />
                 <FormMessage message={message} />
               </FormItem>
