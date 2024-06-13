@@ -1,4 +1,4 @@
-import { useDispatch } from 'react-redux';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import styled from 'styled-components';
 import { v4 as uuidv4 } from 'uuid';
 import useForm from '@/hooks/useForm';
@@ -9,7 +9,8 @@ import { FormField, FormItem, FormMessage } from '@/components/Form';
 import { Input } from '@/components/Input';
 import { Label } from '@/components/Label';
 import { Select, SelectOption } from '@/components/Select';
-import { addPost } from '@/redux/slices/postsSlice';
+import { createPost } from '@/api/posts';
+import useAuthStore from '@/zustand/useAuthStore';
 
 const resolver = (formValues) => {
   const { success, error } = postSchema.safeParse(formValues);
@@ -17,10 +18,19 @@ const resolver = (formValues) => {
 };
 
 const ExpenseForm = () => {
-  const dispatch = useDispatch();
+  const queryClient = useQueryClient();
+  const userId = useAuthStore((state) => state.user.id);
+
+  const { mutate } = useMutation({
+    mutationFn: (values) => createPost(values),
+    onSuccess: () => {
+      alert('등록이 완료되었어요');
+      queryClient.invalidateQueries({ queryKey: ['expenses'] });
+    },
+  });
 
   const onSubmit = (values) => {
-    dispatch(addPost({ ...values, id: uuidv4() }));
+    mutate({ ...values, id: uuidv4(), userId });
   };
 
   const {
