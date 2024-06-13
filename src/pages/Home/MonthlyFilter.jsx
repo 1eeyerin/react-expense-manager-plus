@@ -1,17 +1,21 @@
-import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
+import { useShallow } from 'zustand/react/shallow';
 import { Button } from '@/components/Button';
-import { updateSelectedMonth } from '@/redux/slices/postsSlice';
+import useExpenseStore from '@/zustand/useExpenseStore';
 
 const MonthlyFilter = () => {
-  const dispatch = useDispatch();
-  const month = useSelector(({ posts }) => posts.selectedMonth);
+  const { updateSelectedMonth, month } = useExpenseStore(
+    useShallow((state) => ({
+      updateSelectedMonth: state.updateSelectedMonth,
+      month: state.selectedMonth,
+    })),
+  );
 
   const onUpdate = (event) => {
     const dataMonth = parseInt(event.target.dataset.month, 10);
     if (!dataMonth) return;
 
-    dispatch(updateSelectedMonth(dataMonth));
+    updateSelectedMonth(dataMonth);
   };
 
   return (

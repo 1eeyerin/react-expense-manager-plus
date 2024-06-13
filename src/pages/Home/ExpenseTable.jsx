@@ -2,7 +2,6 @@ import { useNavigate } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import dayjs from 'dayjs';
 import styled from 'styled-components';
-import useShallowEqualSelector from '@/hooks/useShallowEqualSelector';
 import { numberWithCommas } from '@/utils';
 import { CATEGORIES } from '@/constants';
 import { Badge } from '@/components/Badge';
@@ -17,8 +16,9 @@ import {
 } from '@/components/Table';
 import { getPosts } from '@/api/posts';
 import useAuthStore from '@/zustand/useAuthStore';
+import useExpenseStore from '@/zustand/useExpenseStore';
 
-const getFilterPosts = (month, posts) => {
+const getFilterPosts = (month, posts = []) => {
   if (month === 0) return posts;
   return posts
     .filter((post) => dayjs(post.date).month() + 1 === month)
@@ -28,11 +28,7 @@ const getFilterPosts = (month, posts) => {
 const ExpenseTable = () => {
   const userId = useAuthStore((state) => state.user.id);
   const navigate = useNavigate();
-  const { selectedMonth } = useShallowEqualSelector(({ posts }) => {
-    return {
-      selectedMonth: posts.selectedMonth,
-    };
-  });
+  const selectedMonth = useExpenseStore((state) => state.selectedMonth);
 
   const { data, isLoading } = useQuery({
     queryKey: ['expenses'],

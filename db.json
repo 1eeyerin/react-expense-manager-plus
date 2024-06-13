@@ -1,11 +1,11 @@
 {
   "expenses": [
     {
-      "id": "a7f7a2fc-85bf-4f28-ad6d-6d148ec3c003",
-      "date": "2024-06-15",
+      "id": "7063707b-e2ec-4136-81b0-851da124a6df",
+      "date": "2024-06-18",
       "category": "household",
-      "price": "11",
-      "description": "dada",
+      "price": "23232423",
+      "description": "sdsdfsdfd",
       "userId": "a1234",
       "author": "호호"
     }
