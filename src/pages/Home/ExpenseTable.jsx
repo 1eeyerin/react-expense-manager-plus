@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { useQuery } from '@tanstack/react-query';
 import dayjs from 'dayjs';
 import styled from 'styled-components';
 import useShallowEqualSelector from '@/hooks/useShallowEqualSelector';
@@ -14,8 +15,9 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/Table';
+import { getPosts } from '@/api/posts';
 
-const getPosts = (month, posts) => {
+const getFilterPosts = (month, posts) => {
   if (month === 0) return posts;
   return posts
     .filter((post) => dayjs(post.date).month() + 1 === month)
@@ -23,14 +25,21 @@ const getPosts = (month, posts) => {
 };
 
 const ExpenseTable = () => {
-  const { lists, selectedMonth } = useShallowEqualSelector(({ posts }) => {
+  const { selectedMonth } = useShallowEqualSelector(({ posts }) => {
     return {
-      lists: posts.posts,
       selectedMonth: posts.selectedMonth,
     };
   });
 
-  const filteredPosts = getPosts(selectedMonth, lists);
+  const { data, isLoading } = useQuery({
+    queryKey: ['expenses'],
+    queryFn: () => getPosts(),
+    retry: 3,
+  });
+
+  if (isLoading) return null;
+
+  const filteredPosts = getFilterPosts(selectedMonth, data);
 
   return (
     <StyledSection>
