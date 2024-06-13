@@ -1,6 +1,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import styled from 'styled-components';
 import { v4 as uuidv4 } from 'uuid';
+import { useShallow } from 'zustand/react/shallow';
 import useForm from '@/hooks/useForm';
 import postSchema from '@/schemas/postSchema';
 import { CATEGORIES } from '@/constants';
@@ -19,7 +20,12 @@ const resolver = (formValues) => {
 
 const ExpenseForm = () => {
   const queryClient = useQueryClient();
-  const userId = useAuthStore((state) => state.user.id);
+  const { userId, author } = useAuthStore(
+    useShallow((state) => ({
+      userId: state.user.id,
+      author: state.user.nickname,
+    })),
+  );
 
   const { mutate } = useMutation({
     mutationFn: (values) => createPost(values),
@@ -30,7 +36,7 @@ const ExpenseForm = () => {
   });
 
   const onSubmit = (values) => {
-    mutate({ ...values, id: uuidv4(), userId });
+    mutate({ ...values, id: uuidv4(), userId, author });
   };
 
   const {

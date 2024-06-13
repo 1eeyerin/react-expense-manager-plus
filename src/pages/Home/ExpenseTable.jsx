@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import dayjs from 'dayjs';
 import styled from 'styled-components';
@@ -16,6 +16,7 @@ import {
   TableRow,
 } from '@/components/Table';
 import { getPosts } from '@/api/posts';
+import useAuthStore from '@/zustand/useAuthStore';
 
 const getFilterPosts = (month, posts) => {
   if (month === 0) return posts;
@@ -25,6 +26,8 @@ const getFilterPosts = (month, posts) => {
 };
 
 const ExpenseTable = () => {
+  const userId = useAuthStore((state) => state.user.id);
+  const navigate = useNavigate();
   const { selectedMonth } = useShallowEqualSelector(({ posts }) => {
     return {
       selectedMonth: posts.selectedMonth,
@@ -39,6 +42,15 @@ const ExpenseTable = () => {
 
   if (isLoading) return null;
 
+  const handleRowClick = (authorId, id) => {
+    if (authorId !== userId) {
+      alert('자신의 게시물만 수정할 수 있어요');
+      return;
+    }
+
+    navigate(`/detail/${id}`);
+  };
+
   const filteredPosts = getFilterPosts(selectedMonth, data);
 
   return (
@@ -50,6 +62,7 @@ const ExpenseTable = () => {
             <TableHead>번호</TableHead>
             <TableHead>지출 항목</TableHead>
             <TableHead>날짜</TableHead>
+            <TableHead>작성자</TableHead>
             <TableHead>지출 내용</TableHead>
             <StyledTableHeadRight>금액</StyledTableHeadRight>
           </TableRow>
@@ -67,8 +80,14 @@ const ExpenseTable = () => {
                   <Badge>{categoryNames.name}</Badge>
                 </TableCell>
                 <TableCell>{post.date}</TableCell>
+                <TableCell>{post.author}</TableCell>
                 <TableCell>
-                  <Link to={`/detail/${post.id}`}>{post.description}</Link>
+                  <button
+                    type="button"
+                    onClick={() => handleRowClick(post.userId, post.id)}
+                  >
+                    {post.description}
+                  </button>
                 </TableCell>
                 <StyledTableCellRight>
                   {numberWithCommas(post.price, '원')}
@@ -99,15 +118,18 @@ const StyledTable = styled(Table)`
       width: 60px;
     }
     &:nth-child(2) {
-      width: 110px;
+      width: 100px;
     }
     &:nth-child(3) {
       width: 130px;
     }
     &:nth-child(4) {
-      width: calc(100% - 480px);
+      width: 100px;
     }
     &:nth-child(5) {
+      width: calc(100% - 570px);
+    }
+    &:nth-child(6) {
       width: 140px;
     }
   }

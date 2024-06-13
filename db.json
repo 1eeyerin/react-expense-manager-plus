@@ -7,7 +7,7 @@
       "category": "food",
       "price": 2000,
       "description": "메가커피",
-      "createdBy": "Rosie",
+      "author": "Rosie",
       "userId": "41bd966c07-5e3c-4130-941f"
     },
     {
@@ -17,7 +17,7 @@
       "category": "food",
       "price": 21000,
       "description": "대광참치",
-      "createdBy": "Rosie",
+      "author": "Rosie",
       "userId": "41efde21c07-5f9c-4650-941f"
     },
     {
@@ -27,7 +27,7 @@
       "category": "food",
       "price": 412000,
       "description": "BBQ",
-      "createdBy": "Me",
+      "author": "Me",
       "userId": "41abeddwc07-5f9c-4650-941f"
     },
     {
@@ -37,7 +37,7 @@
       "category": "others",
       "price": 23000,
       "description": "리액트 마스터",
-      "createdBy": "Me",
+      "author": "Me",
       "userId": "41eeqwwc07-5f9c-4650-941f"
     },
     {
@@ -47,8 +47,35 @@
       "category": "food",
       "price": 100000,
       "description": "세광양대창",
-      "createdBy": "Me",
+      "author": "Me",
       "userId": "4111207-5f9c-4e20-912f"
+    },
+    {
+      "id": "55d0d7e7-65b3-47fa-aa27-c9993c072235",
+      "date": "2024-05-31",
+      "category": "household",
+      "price": "1324",
+      "description": "ㄴㅇ러ㅣㅇㄴ",
+      "userId": "a1234",
+      "author": "호호"
+    },
+    {
+      "id": "61c08fa6-2036-4b5c-a6f7-1df72cafd9a5",
+      "date": "2024-06-14",
+      "category": "clothingAndBeauty",
+      "price": "23",
+      "description": "sd",
+      "userId": "a1234",
+      "author": "호호"
+    },
+    {
+      "id": "b013eb37-a5dc-4462-a85b-e081fba2b890",
+      "date": "2024-06-08",
+      "category": "clothingAndBeauty",
+      "price": "234",
+      "description": "djkldjflkdsjflkdsjfkldsjfklds",
+      "userId": "a1234",
+      "author": "호호"
     }
   ]
 }
