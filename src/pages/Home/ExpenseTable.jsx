@@ -37,7 +37,6 @@ const ExpenseTable = () => {
   const { data, isLoading } = useQuery({
     queryKey: ['expenses'],
     queryFn: () => getPosts(),
-    retry: 3,
   });
 
   if (isLoading) return null;

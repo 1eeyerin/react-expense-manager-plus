@@ -32,12 +32,9 @@ const ExpenseForm = () => {
     onSuccess: () => {
       alert('등록이 완료되었어요');
       queryClient.invalidateQueries({ queryKey: ['expenses'] });
+      formRef.current.reset();
     },
   });
-
-  const onSubmit = (values) => {
-    mutate({ ...values, id: uuidv4(), userId, author });
-  };
 
   const {
     handleSubmit,
@@ -45,7 +42,9 @@ const ExpenseForm = () => {
     message: formMessage,
   } = useForm({
     resolver,
-    onSubmit,
+    onSubmit: (values) => {
+      mutate({ ...values, id: uuidv4(), userId, author });
+    },
   });
 
   return (

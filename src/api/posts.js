@@ -1,8 +1,16 @@
 import { JSON_SERVER_URL } from '@/constants';
-import { axiosGet, axiosPost } from './requests';
+import { axiosDelete, axiosGet, axiosPatch, axiosPost } from './requests';
 
-export const getPosts = (options) =>
-  axiosGet({ url: `${JSON_SERVER_URL}/expenses`, ...options });
+export const getPosts = () => axiosGet({ url: `${JSON_SERVER_URL}/expenses` });
 
-export const createPost = (body, options) =>
-  axiosPost({ url: `${JSON_SERVER_URL}/expenses`, body, ...options });
+export const getPost = (id) =>
+  axiosGet({ url: `${JSON_SERVER_URL}/expenses/${id}` });
+
+export const createPost = (body) =>
+  axiosPost({ url: `${JSON_SERVER_URL}/expenses`, body });
+
+export const updatePost = (id, body) =>
+  axiosPatch({ url: `${JSON_SERVER_URL}/expenses/${id}`, body });
+
+export const deletePost = (id) =>
+  axiosDelete({ url: `${JSON_SERVER_URL}/expenses/${id}` });

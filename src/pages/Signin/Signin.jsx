@@ -20,11 +20,16 @@ const Signin = () => {
     onSuccess: (data) => {
       setUser(data);
       setTokenToLocalStorage(data.accessToken);
+      formRef.current.reset();
       navigate('/');
     },
   });
 
-  const { handleSubmit, message: errorMessage } = useForm({
+  const {
+    handleSubmit,
+    formRef,
+    message: errorMessage,
+  } = useForm({
     onSubmit: async (values) => {
       mutate(values);
     },
@@ -38,7 +43,7 @@ const Signin = () => {
         </Typography>
       </StyledTypography>
       <StyledSection>
-        <StyledForm onSubmit={handleSubmit}>
+        <StyledForm ref={formRef} onSubmit={handleSubmit}>
           <FormField
             name="id"
             render={({ id, htmlFor, name, message }) => (

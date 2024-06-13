@@ -20,7 +20,11 @@ const EditProfile = () => {
     },
   });
 
-  const { handleSubmit, message: errorMessage } = useForm({
+  const {
+    handleSubmit,
+    formRef,
+    message: errorMessage,
+  } = useForm({
     onSubmit: async (values) => {
       const formData = new FormData();
       formData.append('avatar', values.avatar);
@@ -38,7 +42,7 @@ const EditProfile = () => {
       </StyledTypography>
 
       <StyledSection>
-        <StyledForm onSubmit={handleSubmit}>
+        <StyledForm ref={formRef} onSubmit={handleSubmit}>
           <FormField
             name="nickname"
             render={({ id, htmlFor, name, message }) => (

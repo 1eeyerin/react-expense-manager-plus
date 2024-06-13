@@ -1,5 +1,5 @@
-import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import styled from 'styled-components';
 import useForm from '@/hooks/useForm';
 import postSchema from '@/schemas/postSchema';
@@ -9,7 +9,7 @@ import { FormField, FormItem, FormMessage } from '@/components/Form';
 import { Input } from '@/components/Input';
 import { Label } from '@/components/Label';
 import { Select, SelectOption } from '@/components/Select';
-import { deletePost, updatePost } from '@/redux/slices/postsSlice';
+import { deletePost, getPost, updatePost } from '@/api/posts';
 
 const resolver = (formValues) => {
   const { success, error } = postSchema.safeParse(formValues);
@@ -19,34 +19,49 @@ const resolver = (formValues) => {
 const DetailForm = () => {
   const { id: paramsId } = useParams();
   const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const post = useSelector(({ posts }) =>
-    posts.posts.find((item) => item.id === paramsId),
-  );
+  const queryClient = useQueryClient();
 
-  const onUpdate = (values) => {
-    dispatch(updatePost(values));
-  };
+  const { data: post } = useQuery({
+    queryKey: ['expense'],
+    queryFn: () => getPost(paramsId),
+  });
 
-  const onDelete = () => {
+  const { mutateAsync: updatePostMutation } = useMutation({
+    mutationFn: (values) => updatePost(paramsId, values),
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({ queryKey: ['expense'] });
+      alert('수정이 완료되었어요');
+      navigate('/');
+    },
+  });
+
+  const { mutateAsync: deletePostMutation } = useMutation({
+    mutationFn: () => deletePost(paramsId),
+  });
+
+  const onDelete = async () => {
     if (!confirm('삭제하실건가요? 🥲')) return;
-
-    dispatch(deletePost(paramsId));
-    navigate(-1);
+    await deletePostMutation();
+    await queryClient.invalidateQueries({ queryKey: ['expense'] });
+    alert('삭제가 완료되었어요');
+    navigate('/');
   };
 
-  const { handleSubmit, message: errorMessage } = useForm({
+  const {
+    handleSubmit,
+    formRef,
+    message: errorMessage,
+  } = useForm({
     resolver,
     onSubmit: (values) => {
-      navigate(-1);
-      onUpdate({ ...values, id: post.id });
+      updatePostMutation({ ...values, id: post.id });
     },
   });
 
   if (!post) return null;
 
   return (
-    <StyledForm onSubmit={handleSubmit}>
+    <StyledForm ref={formRef} onSubmit={handleSubmit}>
       <FormField
         name="date"
         message={errorMessage}

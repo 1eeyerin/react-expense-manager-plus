@@ -8,9 +8,14 @@ import Typography from '@/components/Typography';
 import { registerUser } from '@/api/auth';
 
 const Signup = () => {
-  const { handleSubmit, message: errorMessage } = useForm({
+  const {
+    handleSubmit,
+    formRef,
+    message: errorMessage,
+  } = useForm({
     onSubmit: async (values) => {
       await registerUser(values);
+      formRef.current.reset();
     },
   });
 
@@ -22,7 +27,7 @@ const Signup = () => {
         </Typography>
       </StyledTypography>
       <StyledSection>
-        <StyledForm onSubmit={handleSubmit}>
+        <StyledForm ref={formRef} onSubmit={handleSubmit}>
           <FormField
             name="id"
             render={({ id, htmlFor, name, message }) => (
