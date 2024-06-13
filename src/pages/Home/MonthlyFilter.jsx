@@ -1,10 +1,10 @@
 import styled from 'styled-components';
 import { useShallow } from 'zustand/react/shallow';
 import { Button } from '@/components/Button';
-import useExpenseStore from '@/zustand/useExpenseStore';
+import usePostsStore from '@/zustand/usePostsStore';
 
 const MonthlyFilter = () => {
-  const { updateSelectedMonth, month } = useExpenseStore(
+  const { updateSelectedMonth, month } = usePostsStore(
     useShallow((state) => ({
       updateSelectedMonth: state.updateSelectedMonth,
       month: state.selectedMonth,

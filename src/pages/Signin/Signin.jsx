@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import useForm from '@/hooks/useForm';
 import { setTokenToLocalStorage } from '@/utils';
 import { Button } from '@/components/Button';
-import { FormField, FormItem, FormMessage } from '@/components/Form';
+import { FormField, FormItem } from '@/components/Form';
 import { Input } from '@/components/Input';
 import { Label } from '@/components/Label';
 import Typography from '@/components/Typography';
@@ -23,13 +23,12 @@ const Signin = () => {
       formRef.current.reset();
       navigate('/');
     },
+    onError: (error) => {
+      alert(error.response.data.message);
+    },
   });
 
-  const {
-    handleSubmit,
-    formRef,
-    message: errorMessage,
-  } = useForm({
+  const { handleSubmit, formRef } = useForm({
     onSubmit: async (values) => {
       mutate(values);
     },
@@ -46,17 +45,16 @@ const Signin = () => {
         <StyledForm ref={formRef} onSubmit={handleSubmit}>
           <FormField
             name="id"
-            render={({ id, htmlFor, name, message }) => (
+            render={({ id, htmlFor, name }) => (
               <FormItem>
                 <Label htmlFor={htmlFor}>아이디</Label>
                 <Input id={id} name={name} placeholder="아이디를 입력하세요" />
-                <FormMessage message={message} />
               </FormItem>
             )}
           />
           <FormField
             name="password"
-            render={({ id, htmlFor, name, message }) => (
+            render={({ id, htmlFor, name }) => (
               <FormItem>
                 <Label htmlFor={htmlFor}>비밀번호</Label>
                 <Input
@@ -65,7 +63,6 @@ const Signin = () => {
                   type="password"
                   placeholder="비밀번호를 입력하세요"
                 />
-                <FormMessage message={message} />
               </FormItem>
             )}
           />

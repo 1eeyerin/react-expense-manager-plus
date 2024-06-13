@@ -3,7 +3,7 @@ import { CATEGORIES } from '@/constants';
 
 const categoryIds = CATEGORIES.map((category) => category.id);
 
-const postSchema = z.object({
+const postsSchema = z.object({
   date: z.string().min(1, {
     message: '날짜를 입력해주세요',
   }),
@@ -23,4 +23,4 @@ const postSchema = z.object({
   }),
 });
 
-export default postSchema;
+export default postsSchema;

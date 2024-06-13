@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { v4 as uuidv4 } from 'uuid';
 import { useShallow } from 'zustand/react/shallow';
 import useForm from '@/hooks/useForm';
-import postSchema from '@/schemas/postSchema';
+import postsSchema from '@/schemas/postsSchema';
 import { CATEGORIES } from '@/constants';
 import { Button } from '@/components/Button';
 import { FormField, FormItem, FormMessage } from '@/components/Form';
@@ -14,7 +14,7 @@ import { createPost } from '@/api/posts';
 import useAuthStore from '@/zustand/useAuthStore';
 
 const resolver = (formValues) => {
-  const { success, error } = postSchema.safeParse(formValues);
+  const { success, error } = postsSchema.safeParse(formValues);
   return success ? {} : error.flatten().fieldErrors;
 };
 

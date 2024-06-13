@@ -16,7 +16,7 @@ import {
 } from '@/components/Table';
 import { getPosts } from '@/api/posts';
 import useAuthStore from '@/zustand/useAuthStore';
-import useExpenseStore from '@/zustand/useExpenseStore';
+import usePostsStore from '@/zustand/usePostsStore';
 
 const getFilterPosts = (month, posts = []) => {
   if (month === 0) return posts;
@@ -28,7 +28,7 @@ const getFilterPosts = (month, posts = []) => {
 const ExpenseTable = () => {
   const userId = useAuthStore((state) => state.user.id);
   const navigate = useNavigate();
-  const selectedMonth = useExpenseStore((state) => state.selectedMonth);
+  const selectedMonth = usePostsStore((state) => state.selectedMonth);
 
   const { data, isLoading } = useQuery({
     queryKey: ['expenses'],

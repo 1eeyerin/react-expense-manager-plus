@@ -2,7 +2,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import styled from 'styled-components';
 import useForm from '@/hooks/useForm';
-import postSchema from '@/schemas/postSchema';
+import postsSchema from '@/schemas/postsSchema';
 import { CATEGORIES } from '@/constants';
 import { Button } from '@/components/Button';
 import { FormField, FormItem, FormMessage } from '@/components/Form';
@@ -12,7 +12,7 @@ import { Select, SelectOption } from '@/components/Select';
 import { deletePost, getPost, updatePost } from '@/api/posts';
 
 const resolver = (formValues) => {
-  const { success, error } = postSchema.safeParse(formValues);
+  const { success, error } = postsSchema.safeParse(formValues);
   return success ? {} : error.flatten().fieldErrors;
 };
 

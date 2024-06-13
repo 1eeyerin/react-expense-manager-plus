@@ -1,21 +1,32 @@
+import { useNavigate } from 'react-router-dom';
+import { useMutation } from '@tanstack/react-query';
 import styled from 'styled-components';
 import useForm from '@/hooks/useForm';
 import { Button } from '@/components/Button';
-import { FormField, FormItem, FormMessage } from '@/components/Form';
+import { FormField, FormItem } from '@/components/Form';
 import { Input } from '@/components/Input';
 import { Label } from '@/components/Label';
 import Typography from '@/components/Typography';
 import { registerUser } from '@/api/auth';
 
 const Signup = () => {
-  const {
-    handleSubmit,
-    formRef,
-    message: errorMessage,
-  } = useForm({
-    onSubmit: async (values) => {
-      await registerUser(values);
+  const navigate = useNavigate();
+
+  const { mutate } = useMutation({
+    mutationFn: (values) => registerUser(values),
+    onSuccess: () => {
+      alert('등록이 완료되었어요');
+      navigate('/signin');
       formRef.current.reset();
+    },
+    onError: (error) => {
+      alert(error.response.data.message);
+    },
+  });
+
+  const { handleSubmit, formRef } = useForm({
+    onSubmit: (values) => {
+      mutate(values);
     },
   });
 
@@ -30,7 +41,7 @@ const Signup = () => {
         <StyledForm ref={formRef} onSubmit={handleSubmit}>
           <FormField
             name="id"
-            render={({ id, htmlFor, name, message }) => (
+            render={({ id, htmlFor, name }) => (
               <FormItem>
                 <Label htmlFor={htmlFor}>아이디</Label>
                 <Input
@@ -41,13 +52,12 @@ const Signup = () => {
                   maxLength={10}
                   required
                 />
-                <FormMessage message={message} />
               </FormItem>
             )}
           />
           <FormField
             name="password"
-            render={({ id, htmlFor, name, message }) => (
+            render={({ id, htmlFor, name }) => (
               <FormItem>
                 <Label htmlFor={htmlFor}>비밀번호</Label>
                 <Input
@@ -59,13 +69,12 @@ const Signup = () => {
                   maxLength={15}
                   required
                 />
-                <FormMessage message={message} />
               </FormItem>
             )}
           />
           <FormField
             name="nickname"
-            render={({ id, htmlFor, name, message }) => (
+            render={({ id, htmlFor, name }) => (
               <FormItem>
                 <Label htmlFor={htmlFor}>닉네임</Label>
                 <Input
@@ -75,7 +84,6 @@ const Signup = () => {
                   maxLength={10}
                   required
                 />
-                <FormMessage message={message} />
               </FormItem>
             )}
           />

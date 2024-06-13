@@ -2,7 +2,7 @@ import { useMutation } from '@tanstack/react-query';
 import { styled } from 'styled-components';
 import useForm from '@/hooks/useForm';
 import { Button } from '@/components/Button';
-import { FormField, FormItem, FormMessage } from '@/components/Form';
+import { FormField, FormItem } from '@/components/Form';
 import { Input } from '@/components/Input';
 import { Label } from '@/components/Label';
 import Typography from '@/components/Typography';
@@ -20,15 +20,17 @@ const EditProfile = () => {
     },
   });
 
-  const {
-    handleSubmit,
-    formRef,
-    message: errorMessage,
-  } = useForm({
+  const { handleSubmit, formRef } = useForm({
     onSubmit: async (values) => {
       const formData = new FormData();
       formData.append('avatar', values.avatar);
       formData.append('nickname', values.nickname);
+
+      if (!values.avatar.size && !values.nickname) {
+        alert('하나 이상의 값을 입력해주세요');
+        return;
+      }
+
       mutate(formData);
     },
   });
@@ -45,7 +47,7 @@ const EditProfile = () => {
         <StyledForm ref={formRef} onSubmit={handleSubmit}>
           <FormField
             name="nickname"
-            render={({ id, htmlFor, name, message }) => (
+            render={({ id, htmlFor, name }) => (
               <FormItem>
                 <Label htmlFor={htmlFor}>닉네임</Label>
                 <Input
@@ -54,13 +56,12 @@ const EditProfile = () => {
                   placeholder="닉네임을 입력하세요"
                   maxLength={10}
                 />
-                <FormMessage message={message} />
               </FormItem>
             )}
           />
           <FormField
             name="avatar"
-            render={({ id, htmlFor, name, message }) => (
+            render={({ id, htmlFor, name }) => (
               <FormItem>
                 <Label htmlFor={htmlFor}>프로필 이미지</Label>
                 <Input
@@ -70,7 +71,6 @@ const EditProfile = () => {
                   accept="image/*"
                   placeholder="썸네일을 입력하세요"
                 />
-                <FormMessage message={message} />
               </FormItem>
             )}
           />

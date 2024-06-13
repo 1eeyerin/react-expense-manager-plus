@@ -7,7 +7,7 @@ const initState = {
   selectedMonth: dayjs().month() + 1,
 };
 
-const useExpenseStore = create(
+const usePostsStore = create(
   persist(
     immer((set) => ({
       ...initState,
@@ -17,9 +17,9 @@ const useExpenseStore = create(
         }),
     })),
     {
-      name: 'expense-storage',
+      name: 'posts-storage',
     },
   ),
 );
 
-export default useExpenseStore;
+export default usePostsStore;
