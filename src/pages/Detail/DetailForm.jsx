@@ -22,14 +22,15 @@ const DetailForm = () => {
   const queryClient = useQueryClient();
 
   const { data: post } = useQuery({
-    queryKey: ['expense'],
+    queryKey: ['expense', paramsId],
     queryFn: () => getPost(paramsId),
   });
-
   const { mutateAsync: updatePostMutation } = useMutation({
     mutationFn: (values) => updatePost(paramsId, values),
     onSuccess: async () => {
-      await queryClient.invalidateQueries({ queryKey: ['expense'] });
+      await queryClient.invalidateQueries({
+        queryKey: ['expense', paramsId],
+      });
       alert('수정이 완료되었어요');
       navigate('/');
     },
@@ -42,7 +43,9 @@ const DetailForm = () => {
   const onDelete = async () => {
     if (!confirm('삭제하실건가요? 🥲')) return;
     await deletePostMutation();
-    await queryClient.invalidateQueries({ queryKey: ['expense'] });
+    await queryClient.invalidateQueries({
+      queryKey: ['expense', paramsId],
+    });
     alert('삭제가 완료되었어요');
     navigate('/');
   };
