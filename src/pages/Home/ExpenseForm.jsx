@@ -1,8 +1,8 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import styled from 'styled-components';
 import { v4 as uuidv4 } from 'uuid';
-import { useShallow } from 'zustand/react/shallow';
 import useForm from '@/hooks/useForm';
+import useShallowSelector from '@/hooks/useShallowSelector';
 import postsSchema from '@/schemas/postsSchema';
 import { CATEGORIES } from '@/constants';
 import { Button } from '@/components/Button';
@@ -20,12 +20,10 @@ const resolver = (formValues) => {
 
 const ExpenseForm = () => {
   const queryClient = useQueryClient();
-  const { userId, author } = useAuthStore(
-    useShallow((state) => ({
-      userId: state.user.id,
-      author: state.user.nickname,
-    })),
-  );
+  const { userId, author } = useShallowSelector(useAuthStore, (state) => ({
+    userId: state.user.id,
+    author: state.user.nickname,
+  }));
 
   const { mutate } = useMutation({
     mutationFn: (values) => createPost(values),
